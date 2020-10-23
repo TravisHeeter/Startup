@@ -1,5 +1,5 @@
 #SingleInstance force
-#Include C:\ahk_scripts\ahk_utilities.ahk
+#Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 #NoEnv
 
 #F2:: ;{ Switch to, between windows of, or create new window of Git Bash if one doesn't exist. And, if File Explorer is open, open Git Bash to that location.

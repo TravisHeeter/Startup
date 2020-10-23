@@ -1,5 +1,5 @@
 #SingleInstance force
-#Include C:\ahk_scripts\ahk_utilities.ahk
+#Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 
 
 F3:: ;{ Switch to, between or open new Atom if one doesn't exist.

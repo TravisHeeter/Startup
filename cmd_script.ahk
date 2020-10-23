@@ -1,5 +1,5 @@
 #SingleInstance force
-#Include C:\ahk_scripts\ahk_utilities.ahk
+#Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 SetTitleMatchMode, 3 ; Exact
 
 ; IN ORDER TO CHANGE crnt:

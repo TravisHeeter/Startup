@@ -5,7 +5,7 @@
 ; ============================================;
 
 #SingleInstance force
-#Include C:\ahk_scripts\ahk_utilities.ahk
+#Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 
 
 ; ALT + s
