@@ -132,7 +132,6 @@ return
 return
 
 !+^e::  ;{ Testing auto cmd refresh
-  Seep("{F4}")
-  Crest(47, 401)
-  Crest(297,265,right=true)
+  Rescript()
+
 return
