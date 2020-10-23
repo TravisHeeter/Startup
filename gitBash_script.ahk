@@ -2,13 +2,17 @@
 #Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 #NoEnv
 
-#F2:: ;{ Switch to, between windows of, or create new window of Git Bash if one doesn't exist. And, if File Explorer is open, open Git Bash to that location.
+#F2:: ;{ Activate gitBash - dont use WinSwap
   If !WinExist("ahk_exe mintty.exe")
     OpenGbHere()
   Else If WinActive("ahk_exe mintty.exe")
     WinMinimize
   Else
     WinActivate, ahk_exe mintty.exe
+return
+
+!^+F2::  ;{ Rescript GitBash
+  Rescript("git")
 return
 
 ; Gets the current path from a file explorer window.
@@ -59,7 +63,7 @@ OpenGbHere()
 }
 
 ;file explorer must 1. be active 2. at the new location 3. no other exp windows can be open.
-^F3:: ;{ Clones Phoenix, sets up flow, changes crnt, resets cmd_script so rebuildPhoenix works
+^F3:: ;{ Clones, sets up flow, changes crnt, resets cmd_script so the rebuild script works
   ; Close git bash if it's open
   If WinExist("ahk_exe mintty.exe")
     WinClose, "ahk_exe mintty.exe"
@@ -81,31 +85,22 @@ OpenGbHere()
   WinMaximize, ahk_exe mintty.exe
   Sleep, 1000
 
-  ; Clone phoenix
+  ; Clone
   Seep("git clone http://gitlab.dev.ditmac.mil/ditmac/phoenix.git{Enter}",12000)
 
   ; Run flow stuff
   Seep("c:/newFlowBranch.bat{Enter}", 20000)
 
-  ; Change dir ot phoenix so you can confirm the correctness of flow
-  Seep("cd phoenix/", 4000)
-
-  ; Reset file exp so crnt updates
-  WinClose, ahk_class CabinetWClass
-  Sleep, 3000
-  Send, {F4}
-  Sleep, 3000
+  ; Change dir so you can confirm the correctness of flow
+  Seep("cd phoenix/{Enter}")
 
   ; Close All CMD windows
   CloseAllCMDs()
 
-  ; ------------------------
   ; re-run cmd_script.ahk
-  ; ------------------------
-  Send, #Esc
-  Sleep, 1000
+  Rescript()
 
-  ; Rebuild Phoenix with the new clone
+  ; Rebuild with the new clone
   Seep("!p")
 return
 
@@ -125,10 +120,9 @@ return
 
   CloseAllCMDs()
   Sleep, 1000
+  Rescript()
 
-  ;GroupAdd,ExplorerGroup, ahk_class CabinetWClass
-  ;GroupAdd,ExplorerGroup, ahk_class ExploreWClass
-  ;WinClose, ahk_group ExplorerGroup
+  Seep("!p")
 return
 
 !+^e::  ;{ Testing auto cmd refresh

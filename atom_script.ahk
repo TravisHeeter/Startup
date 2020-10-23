@@ -1,18 +1,17 @@
 #SingleInstance force
 #Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 
-
 F3:: ;{ Switch to, between or open new Atom if one doesn't exist.
   WinSwap("Atom", "C:\Users\theeter\AppData\Local\atom\atom.exe")
 return
 
-; Alt + F3 is used in gitbash for changing crnt
-;!F3:: ;{ Same as F1, but minimizes the window between switching
-;  WinSwapMin("Atom", "ahk_exe atom.exe", "C:\Users\theeter\AppData\Local\atom\atom.exe")
-;return
+!^+F3::  ;{ Rescript Atom
+  Rescript("atom")
+return
+
 
 ; Open the current project, and remove the unneccessary lines from the POM files.
-^!+F3:: ;{ Comment POMs; Incomplete
+#!+F3:: ;{ Comment POMs; Incomplete
   ; Make sure Atom is active
   Act("Atom","C:\Users\theeter\AppData\Local\atom\atom.exe")
 

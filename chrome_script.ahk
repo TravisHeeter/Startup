@@ -11,6 +11,10 @@ return
   WinSwapMin("Google Chrome", "ahk_exe chrome.exe", "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe")
 return
 
+^+!F1::  ;{ Rescript Chrome
+  Rescript("chrome")
+return
+
 ; Alt + D
 !d:: ;{ Reload Chrome, Run Test
   User := "ArmyTM"
@@ -42,7 +46,7 @@ ClickPhoenixButtons(Rest:=2000,Screen:="Full",DockedDevTools:=true){
 
   ; X,Y coordinates for the FULL sized monitor screen
   LoginCoords := [2491,176]    ; x,y coords of the login button
-  ConsentCoords := [1242,808]  ; coords of the consent button when chome dev tools are docked in the lower part of the browser
+  ConsentCoords := [1231,806]  ; coords of the consent button when chome dev tools are docked in the lower part of the browser
 
   if(!DockedDevTools)
     ConsentCoords := [1239,918]

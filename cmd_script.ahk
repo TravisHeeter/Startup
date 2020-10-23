@@ -2,6 +2,10 @@
 #Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 SetTitleMatchMode, 3 ; Exact
 
+!^+F6::  ;{ Resecript CMD - also mapped to !^+e in gitBash
+  Rescript("cmd")
+return
+
 ; IN ORDER TO CHANGE crnt:
 ; ======= RE-RUN this script ========
 
