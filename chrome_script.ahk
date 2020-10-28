@@ -17,13 +17,57 @@ return
 
 ; Alt + D
 !d:: ;{ Reload Chrome, Run Test
-  User := "ArmyTM"
-  Screen := "Full" ; Full, Small, Laptop, Windowed
+;  UserValues := []
+;
+;  ; The order of certs as they appear on the phoenix cert window
+;  UserValues.Push("Org23TM")         ; 0
+;  UserValues.Push("Org23Admin")      ; 1
+;  UserValues.Push("Org23Analyst")    ; 2
+;  UserValues.Push("ArmyComponent")   ; 3
+;  UserValues.Push("ArmyIno")         ; 4
+;  UserValues.Push("ArmySme")         ; 5
+;  UserValues.Push("ArmyTM")          ; 6
+;  UserValues.Push("ArmySystem")      ; 7
+;  UserValues.Push("ArmyIsso")        ; 8
+;  UserValues.Push("ArmyDataAdmin")   ; 9
+;  UserValues.Push("ArmyAdmin")       ; 10
+;  UserValues.Push("ArmySupervisor")  ; 11
+;  UserValues.Push("ArmyAnalyst")     ; 12
+;  UserValues.Push("DMTM")            ; 13
+;  UserValues.Push("DMIsso")          ; 14
+;  UserValues.Push("DMAdmin")         ; 15
+;  UserValues.Push("DMAnalyst")       ; 16
+;  UserValues.Push("DM_T_M")          ; 17 - Doesn't work; use Org23TM instead
+;  UserValues.Push("DM_Analyst")      ; 18
+;
+;  ScreenValues := []
+;  ScreenValues.Push("Full")
+;  ScreenValues.Push("Small")
+;  ScreenValues.Push("Laptop")
+;  ScreenValues.Push("Windowed")
+;  ScreenValues.Push("Quarter")
+;
+;
+;  Gui, Add, Text,, Pick a user and screen size.
+;  Gui, Add, DDL, vUserListBox, UserValues
+;  Gui, Add, DDL, vScreenListBox, ScreenValues
+;  Gui, Add, Button, Default, OK
+;  For index, element in UserValues
+;  {
+;    GuiControl,,MyListBox,%element%
+;  }
+;  Gui, Show
+;
+;  ButtonOK:
+;  Gui, Submit
+;  User := %UserListBox%
+;  Screen := %ScreenListBox%
+
+User := "DMIsso"
+Screen := "Full"
 
   GoToPhoenix(User,Screen)
-
   Sleep, 1000
-
   Tester(Screen)
 return
 
@@ -39,16 +83,16 @@ return
   ; Laptop, which is the laptop screen size - but that hasn't been coded yet.
   ; Windowed : The Screen is full, but the browser window is inthe upper-righ t corner of the screen
 ; ===================================================
-ClickPhoenixButtons(Rest:=2000,Screen:="Full",DockedDevTools:=true){
+ClickPhoenixButtons(Rest:=2000,Screen:="Full",DockedDevTools:="true"){
   ; When the app starts after a full reload, it takes a little longer.
   WinActivate, DSOS 3.0
   Sleep, %Rest%
 
   ; X,Y coordinates for the FULL sized monitor screen
   LoginCoords := [2491,176]    ; x,y coords of the login button
-  ConsentCoords := [1231,806]  ; coords of the consent button when chome dev tools are docked in the lower part of the browser
+  ConsentCoords := [1254,809]  ; coords of the consent button when chome dev tools are docked in the lower part of the browser
 
-  if(!DockedDevTools)
+  if(DockedDevTools = "false")
     ConsentCoords := [1239,918]
 
   If(Screen == "Small"){
@@ -70,7 +114,7 @@ ClickPhoenixButtons(Rest:=2000,Screen:="Full",DockedDevTools:=true){
 
   Crest(LoginCoords,,3000)
   Send, {WheelDown 10}
-  Sleep, 1000
+  Sleep, 2000
   Crest(ConsentCoords)
 }
 
@@ -81,12 +125,13 @@ GoToPhoenix(User:="Org23TM",Screen:="Full"){
   WinActivate, DSOS 3.0
   Sleep, 1000
 
-  ; If there is already a DSoS window, refresh it.
+  ; If there is already a DSoS window, close it.
   If WinActive(DSOS 3.0) {
+    WinClose
     ; Refresh the page
-    Send, {F5}
-    Sleep, 6800
-  } Else {
+    ;Send, {F5}
+    ;Sleep, 6800
+  } ;Else {
 
     ; Open a new incognito window to phoenix
     Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://localhost:8081/phoenix/
@@ -104,20 +149,21 @@ GoToPhoenix(User:="Org23TM",Screen:="Full"){
     ; Open dev tools
     Send {F12}
     Sleep, 3000
-  }
+  ;}
 
   ClickPhoenixButtons(7000,Screen,false)
 }
 
 Tester(Screen:="Full"){
+; Go To First Case
   if(Screen = "Full"){
-    Crest(449,230) ; Cases
-    ; Crest(525,225) ; RFIs
-    Crest(587,486) ; Click the Case
+    ; Crest(449,230) ; Cases
+    Crest(525,225) ; RFIs
+    ; Crest(587,486) ; Click the Case
     ; Crest(256,440) ; Click the RFI
   } Else If(Screen = "Windowed"){
-    Crest(233,168)  ; Cases
-    Crest(367,406)  ; First Case
+    ;Crest(233,168)  ; Cases
+    ;Crest(367,406)  ; First Case
   } Else If(Screen = "Quarter"){
 
   } Else
@@ -125,8 +171,37 @@ Tester(Screen:="Full"){
 
   ; Go to the workbook section
   ;Send, {WheelDown 10}
+  ;CreateNewCase()
 }
 
+CreateNewCase(){
+  Crest(2350,218) ; New case button
+  Crest(524,558)  ; Incident date input
+  Seep("{Enter}") ; Accept default datetime
+  Crest(1100,800) ; Incident desc
+  FormatTime, dt,, dd-MM-yy HH:mm:ss
+  crntvar:=crnt
+  ttp:="Testing " crntvar " - " dt
+  Seep(ttp)       ; Incident desc
+  Seep("{Tab 4}{Enter}{Down 1}{Enter}") ; Responsible Org
+  Seep("{Tab 3}{Enter}{Down 1}{Enter}") ; Triage Level
+  Seep("{Tab}{Esc}{Tab}{Esc}{Tab}{Tab}Testing") ; Actions to Date
+  Seep("{Tab 19}{Enter}") ; Report Thresholds
+  Seep("{Tab 20}Richmond") ; City
+  Seep("{Tab}v") ; State
+  Seep("{Tab 3}{Enter}", 3000) ; Lookup Person Button
+  Seep("{Tab}H") ; Last name
+  Seep("{Down}{Enter}") ; Autofill name
+  Seep("{Tab 2}{Enter}", 6000) ; Find Person
+  Crest(1244,494) ; Click to normalize tab distance
+  Seep("{Tab 1}{Enter}", 2000) ; Select First Person
+  Seep("{Tab 7}{Enter}") ; Accept Person
+}
+
+!^+a::
+  Seep("{Tab 2}{Enter}", 3000) ; Lookup Person Button
+
+return
 
 ; ================ Keybinds =================
 

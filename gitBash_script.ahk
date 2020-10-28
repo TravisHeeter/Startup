@@ -63,7 +63,7 @@ OpenGbHere()
 }
 
 ;file explorer must 1. be active 2. at the new location 3. no other exp windows can be open.
-^F3:: ;{ Clones, sets up flow, changes crnt, resets cmd_script so the rebuild script works
+^F3:: ;{ NEW BRANCH: Clones, sets up flow, changes crnt, resets cmd_script so the rebuild script works
   ; Close git bash if it's open
   If WinExist("ahk_exe mintty.exe")
     WinClose, "ahk_exe mintty.exe"
