@@ -10,5 +10,9 @@ F4::
   ;Else
   ;  WinActivate, ahk_class CabinetWClass
 
-  WinSwap("ahk_class CabinetWClass", "%systemroot%\explorer.exe")
+  WinSwap("ahk_class CabinetWClass", "C:\Windows\explorer.exe")
+return
+
+!^+F4::  ;{ Rescript GitBash
+  Rescript("exp")
 return
