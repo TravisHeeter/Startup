@@ -15,61 +15,26 @@ return
   Rescript("chrome")
 return
 
-; Alt + D
-!d:: ;{ Reload Chrome, Run Test
-;  UserValues := []
-;
-;  ; The order of certs as they appear on the phoenix cert window
-;  UserValues.Push("Org23TM")         ; 0
-;  UserValues.Push("Org23Admin")      ; 1
-;  UserValues.Push("Org23Analyst")    ; 2
-;  UserValues.Push("ArmyComponent")   ; 3
-;  UserValues.Push("ArmyIno")         ; 4
-;  UserValues.Push("ArmySme")         ; 5
-;  UserValues.Push("ArmyTM")          ; 6
-;  UserValues.Push("ArmySystem")      ; 7
-;  UserValues.Push("ArmyIsso")        ; 8
-;  UserValues.Push("ArmyDataAdmin")   ; 9
-;  UserValues.Push("ArmyAdmin")       ; 10
-;  UserValues.Push("ArmySupervisor")  ; 11
-;  UserValues.Push("ArmyAnalyst")     ; 12
-;  UserValues.Push("DMTM")            ; 13
-;  UserValues.Push("DMIsso")          ; 14
-;  UserValues.Push("DMAdmin")         ; 15
-;  UserValues.Push("DMAnalyst")       ; 16
-;  UserValues.Push("DM_T_M")          ; 17 - Doesn't work; use Org23TM instead
-;  UserValues.Push("DM_Analyst")      ; 18
-;
-;  ScreenValues := []
-;  ScreenValues.Push("Full")
-;  ScreenValues.Push("Small")
-;  ScreenValues.Push("Laptop")
-;  ScreenValues.Push("Windowed")
-;  ScreenValues.Push("Quarter")
-;
-;
-;  Gui, Add, Text,, Pick a user and screen size.
-;  Gui, Add, DDL, vUserListBox, UserValues
-;  Gui, Add, DDL, vScreenListBox, ScreenValues
-;  Gui, Add, Button, Default, OK
-;  For index, element in UserValues
-;  {
-;    GuiControl,,MyListBox,%element%
-;  }
-;  Gui, Show
-;
-;  ButtonOK:
-;  Gui, Submit
-;  User := %UserListBox%
-;  Screen := %ScreenListBox%
-
-User := "DMIsso"
-Screen := "Full"
-
+RunPhoenixUser(User:="DMAnalyst",Screen:="Full"){
   GoToPhoenix(User,Screen)
   Sleep, 1000
-  Tester(Screen)
+;  Tester(Screen)
+}
+
+!d:: ;{ Run Phoenix as Analyst
+!z::
+  RunPhoenixUser()
 return
+!i::  ;{ Run Phoenix as ISSO
+!x::
+  RunPhoenixUser("DMIsso")
+return
+!t::  ;{ Run Phoenix as a Triage Manager
+!c::
+  RunPhoenixUser("DMTM")
+return
+
+
 
 
 ; ================ Functions =================
