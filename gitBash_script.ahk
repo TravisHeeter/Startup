@@ -1,5 +1,6 @@
 #SingleInstance force
 #Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
+#Include C:\ahk_scripts\ahk_utils\git_bash_utils.ahk
 #NoEnv
 
 #F2:: ;{ Activate gitBash - dont use WinSwap
@@ -14,53 +15,6 @@ return
 !^+F2::  ;{ Rescript GitBash
   Rescript("git")
 return
-
-; Gets the current path from a file explorer window.
-GetCurrentPath()
-{
-  If !WinActive("ahk_class CabinetWClass"){
-    MsgBox, File Explorer is not active. Please open a file explorer window and navigate to a phoenix folder.
-    Reload ; Stops this script and reloads it, basically what break should do.
-  }
-  ; This is required to get the full path of the file from the address bar
-  WinGetText, full_path, A
-
-  ; Split on newline (`n)
-  StringSplit, word_array, full_path, `n
-
-  ; Find and take the element from the array that contains address
-  Loop, %word_array0%
-  {
-      IfInString, word_array%A_Index%, Address
-      {
-          full_path := word_array%A_Index%
-          break
-      }
-  }
-
-  ; strip to bare address
-  full_path := RegExReplace(full_path, "^Address: ", "")
-
-  ; Just in case - remove all carriage returns (`r)
-  StringReplace, full_path, full_path, `r, , all
-
-  return full_path
-}
-
-; Opens the Git bash shell in the File Explorer path.
-OpenGbHere()
-{
-    full_path := GetCurrentPath()
-
-    IfInString full_path, \
-    {
-        Run,  C:\Program Files\Git\git-bash.exe, %full_path%
-    }
-    else
-    {
-        Run, C:\Program Files\Git\git-bash.exe --cd-to-home
-    }
-}
 
 ;file explorer must 1. be active 2. at the new location 3. no other exp windows can be open.
 ^F3:: ;{ NEW BRANCH: Clones, sets up flow, changes crnt, resets cmd_script so the rebuild script works
@@ -125,7 +79,20 @@ return
   Seep("!p")
 return
 
-!+^e::  ;{ Testing auto cmd refresh
-  Rescript()
+!^+w::  ; Create Git Branches File
+  CreateGitBranchFile()
+return
 
+!^+c::  ; Run CheckBranch Selection
+  Branches := ReadGitBranchesFromFile()
+  Branch := ArrayToDropDown(Branches)
+return
+
+!^+d::  ; permanently delete all folders in feature (checkbranch)
+  Seep("{F4}")
+  Crest(47,422,500)
+  Seep("^l")
+  Seep("{Tab 3}")
+  Seep("^a")
+  Seep("+{Del}")
 return

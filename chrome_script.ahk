@@ -54,7 +54,7 @@ ClickPhoenixButtons(Rest:=2000,Screen:="Full",DockedDevTools:="true"){
   Sleep, %Rest%
 
   ; X,Y coordinates for the FULL sized monitor screen
-  LoginCoords := [2491,146]    ; x,y coords of the login button
+  LoginCoords := [2491,156]    ; x,y coords of the login button
   ConsentCoords := [1254,809]  ; coords of the consent button when chome dev tools are docked in the lower part of the browser
 
   if(DockedDevTools = "false")
