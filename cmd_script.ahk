@@ -4,9 +4,7 @@ SetTitleMatchMode, 3 ; Exact
 
 !^+F6::  ;{ Resecript CMD - also mapped to !^+e in gitBash
   Rescript("cmd")
-  Sleep, 1000
-  WinActivate, ahk_class CabinetWClass
-  WinMinimize, ahk_class CabinetWClass
+  Seep("{F3}")  ; Switch to Atom
 return
 
 ; IN ORDER TO CHANGE crnt:
