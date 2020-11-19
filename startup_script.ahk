@@ -7,6 +7,7 @@
 #SingleInstance force
 #Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 
+!^+[:: Rescript("startup")  ; Rescript Startup Script
 
 ; ALT + s
 ; Startup Script
