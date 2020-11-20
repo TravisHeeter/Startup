@@ -1,5 +1,4 @@
 #SingleInstance force
-#Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
 #Include C:\ahk_scripts\ahk_utils\git_bash_utils.ahk
 
 

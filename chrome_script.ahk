@@ -13,3 +13,6 @@ F1:: WinSwap("Google Chrome", ChromeEXE)  ; Switch to Chrome, between Chrome win
 !z:: LaunchSite()
 !x:: LaunchSite("DMIsso")
 !c:: LaunchSite("DMTM")
+
+!a:: CreateNewCase()
+!b:: FillSsnDod()

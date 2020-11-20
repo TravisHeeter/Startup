@@ -1,5 +1,5 @@
 #SingleInstance force
-#Include C:\ahk_scripts\ahk_utils\ahk_utilities.ahk
+#Include C:\ahk_scripts\ahk_utils\ahk_functions.ahk
 SetTitleMatchMode, 3 ; Exact
 
 !^+F6::  ;{ Resecript CMD - also mapped to !^+e in gitBash
