@@ -1,5 +1,5 @@
 #SingleInstance force
-#Include C:\ahk_scripts\ahk_utils\git_bash_utils.ahk
+#Include C:\ahk_scripts\ahk_utils\F2_Git_Functions.ahk
 
 
 #F2:: ActivateGitBash()  ; Activate gitBash - dont use WinSwap
